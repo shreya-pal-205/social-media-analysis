@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/lf/:path*",  // Match all requests starting with /lf
+      "destination": "https://api.langflow.astra.datastax.com/:path*"  // Forward to your target API
+    }
+  ]
+}
