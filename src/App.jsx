@@ -17,26 +17,35 @@ class LangflowClient {
   }
 
   async post(endpoint, body, headers = { "Content-Type": "application/json" }) {
-    headers["Authorization"] = `Bearer ${this.applicationToken}`;
-    headers["Content-Type"] = "application/json";
-    const url = `${this.baseURL}${endpoint}`;
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(body)
-      });
+  headers["Authorization"] = `Bearer ${this.applicationToken}`;
+  headers["Content-Type"] = "application/json";
+  const url = `${this.baseURL}${endpoint}`;
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(body)
+    });
 
-      const responseMessage = await response.json();
+    const responseText = await response.text(); // Read raw text
+    try {
+      const responseMessage = JSON.parse(responseText); // Try to parse JSON
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText} - ${JSON.stringify(responseMessage)}`);
       }
       return responseMessage;
-    } catch (error) {
-      console.error('Request Error:', error.message);
-      throw error;
+    } catch (jsonError) {
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText} - ${responseText}`);
+      }
+      throw new Error(`Unexpected response format: ${responseText}`);
     }
+  } catch (error) {
+    console.error('Request Error:', error.message);
+    throw error;
   }
+}
+
 
   async initiateSession(flowId, langflowId, inputValue, inputType = 'chat', outputType = 'chat', stream = false, tweaks = {}) {
     const endpoint = `/lf/${langflowId}/api/v1/run/${flowId}?stream=${stream}`;
@@ -92,7 +101,7 @@ const App = () => {
   const flowIdOrName = '49050ddb-5722-42ab-a20a-2e1b5511b1ea';
   const langflowId = 'f9d59779-d9a5-453a-ad47-78798017757a';
   const applicationToken = 'AstraCS:vZdJmcEixvvmZtjQnWWRSMmu:13bf5974794cdfe86a0f4e2e1414b66834e4c61e3bfb0fb4c8004b2149cd18fc';
-  const langflowClient = new LangflowClient('', applicationToken); // Use empty string as baseURL since Vite proxies requests
+  const langflowClient = new LangflowClient('/lf', applicationToken); // Use empty string as baseURL since Vite proxies requests
 
   const handleSubmit = async (event) => {
     event.preventDefault();
