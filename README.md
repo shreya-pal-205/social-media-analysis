@@ -1,6 +1,9 @@
 
 #Social Media Performance Analysis - Pre-Hackathon Assignment Overview
 
+1. Deploy Link (Vercel) --> https://social-media-analysis-pdhn.vercel.app/
+2. Github Link --> https://github.com/shreya-pal-205/social-media-analysis
+
 The Social Media Performance Analysis project is a basic analytics tool developed for the Level Supermind Hackathon Pre-Hackathon Assignment. The tool uses Langflow, DataStax Astra DB, and Gemini to analyze engagement data from mock social media accounts and provide insights into how different post types (carousel, reels, static images) perform in terms of likes, shares, and comments. The project aims to help users understand how various social media formats impact engagement metrics. Hackathon Details
 """Assignment: Pre-Hackathon Social Media Performance Analysis
 """Deadline: January 10th, 2025
@@ -191,7 +194,7 @@ The main objective of this project was to develop an analytics module that:
 """Langflow: A workflow creation tool that integrates with Gemini to generate insights from the data.
 """Gemini: An AI-powered language model integrated into Langflow to generate insights from engagement data.
 
-"""HTML/CSS/JavaScript/React: Front-end technologies used to build the user interface of the web application.
+"""React/Tailwind CSS: Front-end technologies used to build the user interface of the web application.
 #Features
 
 1. Data Generation & Storage
